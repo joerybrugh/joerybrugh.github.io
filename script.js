@@ -14,6 +14,19 @@ navLinks.addEventListener("click", (event) => {
   }
 });
 
+const copyBtcButton = document.querySelector("#copy-btc-address");
+const btcAddress = document.querySelector("#btc-address").textContent.trim();
+const donationStatus = document.querySelector("#donation-status");
+copyBtcButton.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(btcAddress);
+    donationStatus.textContent = "Wallet address copied.";
+  } catch (error) {
+    console.error("Could not copy the Bitcoin wallet address.", error);
+    donationStatus.textContent = "Copy unavailable here. Select the wallet address above to copy it.";
+  }
+});
+
 const snakeCanvas = document.querySelector("#snake-canvas");
 const snakeContext = snakeCanvas.getContext("2d");
 const snakeStatus = document.querySelector("#snake-status");

@@ -30,6 +30,7 @@
       <div class="nav-links" id="nav-links">
         <a href="#about">About</a>
         <a href="#arcade">Little arcade</a>
+        <a href="#donate">Donate</a>
         <a class="nav-chat-link" href="#chat">Say hello <span aria-hidden="true">↗</span></a>
       </div>
     </nav>
@@ -159,6 +160,24 @@
             <button type="submit" aria-label="Send message">➤</button>
           </form>
         </section>
+      </div>
+    </section>
+
+    <section class="section donation-section" id="donate" aria-labelledby="donate-title">
+      <div class="shell donation-card">
+        <div class="donation-art" aria-hidden="true">🐼<span>₿</span></div>
+        <div class="donation-copy">
+          <span class="eyebrow">A LITTLE SUPPORT</span>
+          <h2 id="donate-title">Enjoying this cozy corner?</h2>
+          <p>If you’d like to support the site, you can send any amount of Bitcoin to this wallet. Thank you for helping keep the panda party going!</p>
+          <code class="donation-address" id="btc-address">bc1qlh6rkk05wh7qpw395pdarxq6y6wgqvyfauvvyt</code>
+          <div class="donation-actions">
+            <a class="button button-primary" href="bitcoin:bc1qlh6rkk05wh7qpw395pdarxq6y6wgqvyfauvvyt">Donate with Bitcoin <span aria-hidden="true">₿</span></a>
+            <button class="button button-secondary" id="copy-btc-address" type="button">Copy wallet address</button>
+          </div>
+          <p class="donation-status" id="donation-status" role="status" aria-live="polite"></p>
+          <p class="donation-warning">Bitcoin transactions are irreversible. Please verify the address in your wallet before sending.</p>
+        </div>
       </div>
     </section>
   </main>
