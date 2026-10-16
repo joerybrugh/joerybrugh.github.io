@@ -27,6 +27,54 @@ copyBtcButton.addEventListener("click", async () => {
   }
 });
 
+const encouragements = [
+  "Like bamboo, you can bend with the wind and still stand tall.",
+  "A panda takes one step at a time; your small steps count too.",
+  "Strong roots grow quietly. Keep showing up for yourself.",
+  "Rest is part of growing. Even pandas take a peaceful pause.",
+  "You don't have to rush; bamboo knows good things take time.",
+  "Your gentle persistence is a strength all its own.",
+  "One brave try can become the beginning of something wonderful.",
+  "When the path gets steep, take it one paw-step at a time.",
+  "You are allowed to learn as you go. That's how forests grow.",
+  "Like a panda with its bamboo, hold on to what helps you thrive.",
+  "A little progress today is still progress worth celebrating.",
+  "You can be soft-hearted and strong at the same time.",
+  "Every fresh morning is another chance to reach for the light.",
+  "Bamboo bends, adapts, and keeps growing. So can you.",
+  "Your patience is planting seeds you may not see yet.",
+  "Even a quiet panda makes a big difference by being itself.",
+  "The strength you need can grow from the smallest start.",
+  "Take a breath, find your balance, and try one more time.",
+  "You bring something to this world that nobody else can.",
+  "Good things grow at their own pace—including you.",
+  "A stumble is just one moment, not the whole journey.",
+  "Be proud of how far your paws have already carried you.",
+  "Kindness is a quiet kind of courage. Keep sharing yours.",
+  "You can reach new heights while staying rooted in who you are.",
+  "A bamboo forest starts with one shoot. Begin where you are.",
+  "Your best today doesn't need to look like anyone else's.",
+  "Pandas keep climbing with patience; keep going your way.",
+  "You have made it through hard days before. Trust your strength.",
+  "Small wins are still wins—celebrate every little leaf.",
+  "The world needs your unique mix of courage and kindness.",
+  "Grow through what you go through, one gentle day at a time.",
+  "You don't need perfect conditions to keep growing.",
+  "Stand tall, stay gentle, and remember: you've got this."
+];
+const encouragementMessage = document.querySelector("#encouragement-message");
+let previousEncouragementIndex = -1;
+document.querySelector("#encouragement-button").addEventListener("click", () => {
+  let nextIndex = Math.floor(Math.random() * encouragements.length);
+  if (encouragements.length > 1) {
+    while (nextIndex === previousEncouragementIndex) {
+      nextIndex = Math.floor(Math.random() * encouragements.length);
+    }
+  }
+  previousEncouragementIndex = nextIndex;
+  encouragementMessage.textContent = encouragements[nextIndex];
+});
+
 const snakeCanvas = document.querySelector("#snake-canvas");
 const snakeContext = snakeCanvas.getContext("2d");
 const snakeStatus = document.querySelector("#snake-status");
@@ -488,6 +536,126 @@ document.querySelector("#guess-reset").addEventListener("click", () => {
   guessForm.querySelector("button").disabled = false;
   guessStatus.textContent = "Pick a number from 1 to 50.";
   guessCount.textContent = "Guesses: 0";
+});
+
+const simonBoard = document.querySelector("#simon-board");
+const simonPads = [...simonBoard.querySelectorAll("button")];
+const simonStatus = document.querySelector("#simon-status");
+const simonRoundLabel = document.querySelector("#simon-round");
+const simonStart = document.querySelector("#simon-start");
+let simonSequence = [];
+let simonInputIndex = 0;
+let simonRoundId = 0;
+let simonIsPlaying = false;
+
+function wait(milliseconds) {
+  return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+}
+
+async function showSimonSequence(roundId) {
+  simonIsPlaying = true;
+  simonStart.disabled = true;
+  simonPads.forEach((pad) => { pad.disabled = true; });
+  simonStatus.textContent = "Watch the panda's pattern…";
+  await wait(450);
+  for (const padIndex of simonSequence) {
+    if (roundId !== simonRoundId) return;
+    simonPads[padIndex].classList.add("is-lit");
+    await wait(450);
+    simonPads[padIndex].classList.remove("is-lit");
+    await wait(220);
+  }
+  if (roundId !== simonRoundId) return;
+  simonInputIndex = 0;
+  simonIsPlaying = false;
+  simonStart.disabled = false;
+  simonPads.forEach((pad) => { pad.disabled = false; });
+  simonStatus.textContent = "Your turn — repeat the pattern!";
+}
+
+function beginSimonGame() {
+  simonRoundId += 1;
+  simonPads.forEach((pad) => {
+    pad.classList.remove("is-lit");
+    pad.disabled = false;
+  });
+  simonSequence = [Math.floor(Math.random() * simonPads.length)];
+  simonRoundLabel.textContent = "Level: 1";
+  showSimonSequence(simonRoundId);
+}
+
+simonStart.addEventListener("click", beginSimonGame);
+simonPads.forEach((pad, index) => {
+  pad.addEventListener("click", () => {
+    if (simonIsPlaying || simonSequence.length === 0) return;
+    if (index !== simonSequence[simonInputIndex]) {
+      simonRoundId += 1;
+      simonSequence = [];
+      simonRoundLabel.textContent = "Level: 0";
+      simonStatus.textContent = "Oops, not quite! Press Start to try again.";
+      simonPads.forEach((item) => {
+        item.disabled = true;
+        item.classList.remove("is-lit");
+      });
+      return;
+    }
+    if (simonInputIndex < simonSequence.length - 1) {
+      simonInputIndex += 1;
+      return;
+    }
+    simonSequence.push(Math.floor(Math.random() * simonPads.length));
+    simonRoundLabel.textContent = `Level: ${simonSequence.length}`;
+    showSimonSequence(simonRoundId);
+  });
+});
+
+const reactionTarget = document.querySelector("#reaction-target");
+const reactionStatus = document.querySelector("#reaction-status");
+const reactionStart = document.querySelector("#reaction-start");
+let reactionTimer;
+let reactionStartedAt = 0;
+let reactionState = "idle";
+
+function resetReactionGame() {
+  window.clearTimeout(reactionTimer);
+  reactionState = "waiting";
+  reactionTarget.disabled = false;
+  reactionTarget.classList.remove("is-ready");
+  reactionTarget.textContent = "Wait for green…";
+  reactionStatus.textContent = "Keep your eyes on the panda!";
+  reactionStart.disabled = true;
+  reactionTimer = window.setTimeout(() => {
+    reactionState = "ready";
+    reactionStartedAt = performance.now();
+    reactionTarget.disabled = false;
+    reactionTarget.classList.add("is-ready");
+    reactionTarget.textContent = "TAP NOW!";
+    reactionStatus.textContent = "Go go go!";
+  }, 1200 + Math.floor(Math.random() * 2200));
+}
+
+reactionStart.addEventListener("click", resetReactionGame);
+reactionTarget.addEventListener("click", () => {
+  if (reactionState === "waiting") {
+    window.clearTimeout(reactionTimer);
+    reactionState = "idle";
+    reactionTarget.disabled = true;
+    reactionTarget.classList.remove("is-ready");
+    reactionTarget.textContent = "Too soon!";
+    reactionStatus.textContent = "False start! Take a breath and try again.";
+    reactionStart.disabled = false;
+    return;
+  }
+  if (reactionState !== "ready") return;
+  const reactionTime = Math.round(performance.now() - reactionStartedAt);
+  reactionState = "idle";
+  reactionTarget.disabled = true;
+  reactionTarget.classList.remove("is-ready");
+  reactionTarget.textContent = `${reactionTime} ms`;
+  reactionStatus.textContent = reactionTime < 250
+    ? "Incredible reflexes!"
+    : "Nice catch! Can you beat that?";
+  reactionStart.disabled = false;
 });
 
 const chatStatus = document.querySelector("#chat-connection");

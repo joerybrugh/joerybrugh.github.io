@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f2e9">
-  <meta name="description" content="A cozy panda-themed corner for a dad learning web development and AI, with seven little browser games and a friendly community chat.">
+  <meta name="description" content="A cozy panda-themed corner with nine little browser games, a friendly community chat, and a work-in-progress garden.">
   <link rel="canonical" href="https://joerybrugh.github.io/">
   <title>Bamboo & Bytes — dad, web development & AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,6 +34,14 @@
         <a class="nav-chat-link" href="#chat">Say hello <span aria-hidden="true">↗</span></a>
       </div>
     </nav>
+    <aside class="progress-note shell" aria-label="Project update">
+      <span class="progress-panda" aria-hidden="true">🐼</span>
+      <div>
+        <strong>A little note from the bamboo grove</strong>
+        <p>This site is a work in progress! We’re growing it as we go, with new ideas and improvements along the way. Thanks for being here!</p>
+      </div>
+      <span class="progress-bamboo" aria-hidden="true">🎋</span>
+    </aside>
     <div class="hero shell">
       <div class="hero-copy">
         <span class="eyebrow"><span aria-hidden="true">✿</span> A soft spot on the internet</span>
@@ -61,6 +69,14 @@
         <span class="eyebrow">OH, HELLO THERE</span>
         <h2 id="about-title">Dad life, web development, and <span>the AI adventure.</span></h2>
         <p>I'm a dad focusing on web development and learning about AI since it first came onto the scene. Watching AI evolve has been incredible: it can help us create, solve problems, and even open up thoughtful new ways to earn money. I'm sharing this little corner as I keep learning and building.</p>
+        <aside class="encouragement-card" aria-label="Panda and bamboo encouragement">
+          <span class="encouragement-panda" aria-hidden="true">🐼</span>
+          <div class="encouragement-content">
+            <span class="eyebrow">A LITTLE BAMBOO STRENGTH</span>
+            <p id="encouragement-message" aria-live="polite">Need a boost? Tap for a little panda wisdom.</p>
+            <button class="button button-small" id="encouragement-button" type="button">Give me a boost <span aria-hidden="true">🎋</span></button>
+          </div>
+        </aside>
         <a class="text-link" href="#chat">Come say hi <span aria-hidden="true">→</span></a>
       </div>
     </section>
@@ -72,7 +88,7 @@
             <span class="eyebrow">THE BAMBOO BREAK ROOM</span>
             <h2 id="arcade-title">Fancy a <span>little play?</span></h2>
           </div>
-          <p>Seven tiny games for a tiny break. No downloads, no pressure.</p>
+          <p>Nine tiny games for a tiny break. No downloads, no pressure.</p>
         </div>
         <div class="games-grid">
           <section class="game-card" aria-labelledby="snake-title">
@@ -132,6 +148,23 @@
             </form>
             <p class="guess-status" id="guess-status" aria-live="polite">Pick a number from 1 to 50.</p>
             <div class="game-controls"><span id="guess-count">Guesses: 0</span><button class="button button-small" id="guess-reset" type="button">New number</button></div>
+          </section>
+          <section class="game-card" aria-labelledby="simon-title">
+            <div class="game-title"><span aria-hidden="true">🎵</span><div><h3 id="simon-title">Panda Says</h3><p>Watch the pattern, then repeat it.</p></div></div>
+            <div class="simon-board" id="simon-board" role="group" aria-label="Panda Says pattern game">
+              <button type="button" data-pad="0" aria-label="Bamboo green"></button>
+              <button type="button" data-pad="1" aria-label="Coral blossom"></button>
+              <button type="button" data-pad="2" aria-label="Panda cream"></button>
+              <button type="button" data-pad="3" aria-label="Sky blue"></button>
+            </div>
+            <p class="simon-status" id="simon-status" aria-live="polite">Press Start and watch closely.</p>
+            <div class="game-controls"><span id="simon-round">Level: 0</span><button class="button button-small" id="simon-start" type="button">Start game</button></div>
+          </section>
+          <section class="game-card" aria-labelledby="reaction-title">
+            <div class="game-title"><span aria-hidden="true">⚡</span><div><h3 id="reaction-title">Panda Reflex</h3><p>Wait for green, then tap as fast as you can!</p></div></div>
+            <button class="reaction-target" id="reaction-target" type="button" disabled>Start a round below</button>
+            <p class="reaction-status" id="reaction-status" aria-live="polite">Ready for a quick reflex test?</p>
+            <div class="game-controls"><span>Beat your best time!</span><button class="button button-small" id="reaction-start" type="button">Start round</button></div>
           </section>
         </div>
       </div>
