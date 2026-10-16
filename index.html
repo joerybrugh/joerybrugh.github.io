@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f2e9">
-  <meta name="description" content="A cozy panda-themed corner of the internet with little browser games and a friendly community chat.">
+  <meta name="description" content="A cozy panda-themed corner for a dad learning web development and AI, with seven little browser games and a friendly community chat.">
   <link rel="canonical" href="https://joerybrugh.github.io/">
-  <title>Bamboo & Bytes — a cozy panda corner</title>
+  <title>Bamboo & Bytes — dad, web development & AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
@@ -38,7 +38,10 @@
         <span class="eyebrow"><span aria-hidden="true">✿</span> A soft spot on the internet</span>
         <h1>Good things grow<br>at their <span>own pace.</span></h1>
         <p>A soft place to play, unwind, and say hello. Pull up a cushion and stay a while.</p>
-        <a class="button button-primary" href="#arcade">Visit the little arcade <span aria-hidden="true">↓</span></a>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#arcade">Visit the little arcade <span aria-hidden="true">↓</span></a>
+          <a class="button button-secondary" href="#chat">Visit the cozy tea &amp; panda party chat <span aria-hidden="true">☕</span></a>
+        </div>
         <div class="hero-note"><span aria-hidden="true">☁</span> A little pause in your day.</div>
       </div>
       <div class="hero-art" aria-label="Illustration of a happy panda in a bamboo grove" role="img">
@@ -59,8 +62,8 @@
       <div class="shell about-content">
         <div class="about-avatar" aria-hidden="true">🐼</div>
         <span class="eyebrow">OH, HELLO THERE</span>
-        <h2 id="about-title">A friendly little corner to <span>play and unwind.</span></h2>
-        <p>Take a break in the bamboo arcade, then drop into the virtual clearing to say hello. This space is made for small moments and friendly company.</p>
+        <h2 id="about-title">Dad life, web development, and <span>the AI adventure.</span></h2>
+        <p>I'm a dad focusing on web development and learning about AI since it first came onto the scene. Watching AI evolve has been incredible: it can help us create, solve problems, and even open up thoughtful new ways to earn money. I'm sharing this little corner as I keep learning and building.</p>
         <a class="text-link" href="#chat">Come say hi <span aria-hidden="true">→</span></a>
       </div>
     </section>
@@ -72,7 +75,7 @@
             <span class="eyebrow">THE BAMBOO BREAK ROOM</span>
             <h2 id="arcade-title">Fancy a <span>little play?</span></h2>
           </div>
-          <p>Three tiny games for a tiny break. No downloads, no pressure.</p>
+          <p>Seven tiny games for a tiny break. No downloads, no pressure.</p>
         </div>
         <div class="games-grid">
           <section class="game-card" aria-labelledby="snake-title">
@@ -97,6 +100,42 @@
             <div class="game-controls"><span id="ttt-status" aria-live="polite">Your turn: X</span><button class="button button-small ttt-reset" type="button">Play again</button></div>
             <p class="key-hint">Two players, one keyboard, zero pressure</p>
           </section>
+          <section class="game-card" aria-labelledby="memory-title">
+            <div class="game-title"><span aria-hidden="true">🧠</span><div><h3 id="memory-title">Panda Pairs</h3><p>Find all eight matching pairs.</p></div></div>
+            <div class="memory-board" id="memory-board" role="grid" aria-label="Memory matching game"></div>
+            <div class="game-controls"><span id="memory-status" aria-live="polite">Find the matching pairs!</span><button class="button button-small" id="memory-reset" type="button">New game</button></div>
+            <p class="key-hint">Flip two cards and remember where they are</p>
+          </section>
+          <section class="game-card" aria-labelledby="rps-title">
+            <div class="game-title"><span aria-hidden="true">✊</span><div><h3 id="rps-title">Rock, Paper, Panda</h3><p>A quick round against the bamboo bot.</p></div></div>
+            <div class="rps-board" aria-label="Choose rock, paper, or scissors">
+              <button type="button" data-choice="rock" aria-label="Choose rock">✊<span>Rock</span></button>
+              <button type="button" data-choice="paper" aria-label="Choose paper">✋<span>Paper</span></button>
+              <button type="button" data-choice="scissors" aria-label="Choose scissors">✌️<span>Scissors</span></button>
+            </div>
+            <p class="rps-result" id="rps-result" aria-live="polite">Pick your move to start!</p>
+            <div class="game-controls"><span id="rps-score">You 0 · Panda 0</span><button class="button button-small" id="rps-reset" type="button">Reset score</button></div>
+          </section>
+          <section class="game-card" aria-labelledby="mole-title">
+            <div class="game-title"><span aria-hidden="true">🎯</span><div><h3 id="mole-title">Bamboo Pop</h3><p>Catch the panda before it pops away.</p></div></div>
+            <div class="pop-board" id="pop-board" role="group" aria-label="Panda popping game">
+              <button type="button" aria-label="Empty spot"></button><button type="button" aria-label="Empty spot"></button><button type="button" aria-label="Empty spot"></button>
+              <button type="button" aria-label="Empty spot"></button><button type="button" aria-label="Empty spot"></button><button type="button" aria-label="Empty spot"></button>
+              <button type="button" aria-label="Empty spot"></button><button type="button" aria-label="Empty spot"></button><button type="button" aria-label="Empty spot"></button>
+            </div>
+            <div class="game-controls"><span id="pop-status" aria-live="polite">Ready when you are!</span><button class="button button-small" id="pop-start" type="button">Start 15 sec</button></div>
+            <p class="key-hint">Tap the panda each time it appears</p>
+          </section>
+          <section class="game-card" aria-labelledby="guess-title">
+            <div class="game-title"><span aria-hidden="true">🔢</span><div><h3 id="guess-title">Guess the Bamboo</h3><p>Can you find the hidden number?</p></div></div>
+            <form class="guess-form" id="guess-form">
+              <label class="visually-hidden" for="guess-number">Guess a number from 1 to 50</label>
+              <input id="guess-number" type="number" min="1" max="50" inputmode="numeric" placeholder="1–50" required>
+              <button class="button button-small" type="submit">Guess</button>
+            </form>
+            <p class="guess-status" id="guess-status" aria-live="polite">Pick a number from 1 to 50.</p>
+            <div class="game-controls"><span id="guess-count">Guesses: 0</span><button class="button button-small" id="guess-reset" type="button">New number</button></div>
+          </section>
         </div>
       </div>
     </section>
@@ -110,7 +149,7 @@
           <div class="chat-panda" aria-hidden="true">🐼</div>
         </div>
         <section class="chat-card" aria-label="Community live chat">
-          <div class="chat-card-heading"><div><span class="online-dot" aria-hidden="true"></span><strong>Clearing chat · live</strong><p id="chat-connection" role="status">Connecting…</p></div><span aria-hidden="true">💬</span></div>
+          <div class="chat-card-heading"><div><span class="online-dot" aria-hidden="true"></span><strong>Clearing chat · live</strong><p id="chat-connection" role="status">Connecting…</p></div></div>
           <ol class="chat-messages" id="chat-messages" aria-live="polite" aria-label="Chat messages"></ol>
           <form class="chat-form" id="chat-form">
             <label class="visually-hidden" for="chat-name">Your name</label>
@@ -119,7 +158,7 @@
             <input id="chat-message" name="message" type="text" maxlength="240" placeholder="Leave a kind note…" autocomplete="off" required>
             <button type="submit" aria-label="Send message">➤</button>
           </form>
-          <p class="chat-footnote">Be kind. This public chat is for friendly conversation.</p>
+          <p class="chat-footnote">Be kind. Emails, phone numbers, and profanity are filtered.</p>
         </section>
       </div>
     </section>

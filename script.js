@@ -267,6 +267,216 @@ document.querySelector(".ttt-reset").addEventListener("click", () => {
   });
 });
 
+const memoryBoard = document.querySelector("#memory-board");
+const memoryStatus = document.querySelector("#memory-status");
+const memorySymbols = ["🐼", "🎋", "🍵", "🌸", "🎮", "⭐", "🍡", "🦋"];
+let memoryCards = [];
+let memoryOpenCards = [];
+let memoryMatchedCards = new Set();
+let memoryLocked = false;
+let memoryTurnCount = 0;
+let memoryFlipTimer;
+
+function startMemoryGame() {
+  window.clearTimeout(memoryFlipTimer);
+  memoryCards = [...memorySymbols, ...memorySymbols].map((symbol, index) => ({ id: index, symbol }));
+  for (let i = memoryCards.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [memoryCards[i], memoryCards[j]] = [memoryCards[j], memoryCards[i]];
+  }
+  memoryOpenCards = [];
+  memoryMatchedCards = new Set();
+  memoryLocked = false;
+  memoryTurnCount = 0;
+  memoryStatus.textContent = "Find the matching pairs!";
+  memoryBoard.replaceChildren();
+  memoryCards.forEach((card, index) => {
+    const button = document.createElement("button");
+    button.className = "memory-card is-hidden";
+    button.type = "button";
+    button.setAttribute("role", "gridcell");
+    button.setAttribute("aria-label", `Hidden card ${index + 1}`);
+    button.textContent = "✿";
+    button.addEventListener("click", () => flipMemoryCard(button, card, index));
+    memoryBoard.append(button);
+  });
+}
+
+function flipMemoryCard(button, card, index) {
+  if (memoryLocked || memoryMatchedCards.has(card.symbol) || memoryOpenCards.some((open) => open.card.id === card.id)) return;
+  button.classList.remove("is-hidden");
+  button.textContent = card.symbol;
+  button.setAttribute("aria-label", `Card ${index + 1}: ${card.symbol}`);
+  memoryOpenCards.push({ card, button });
+  if (memoryOpenCards.length < 2) return;
+  memoryTurnCount += 1;
+  const [first, second] = memoryOpenCards;
+  if (first.card.symbol === second.card.symbol) {
+    memoryMatchedCards.add(card.symbol);
+    first.button.disabled = true;
+    second.button.disabled = true;
+    memoryOpenCards = [];
+    const pairsFound = memoryMatchedCards.size;
+    memoryStatus.textContent = pairsFound === memorySymbols.length
+      ? `You found them all in ${memoryTurnCount} turns!`
+      : `${pairsFound} of ${memorySymbols.length} pairs · ${memoryTurnCount} turns`;
+    return;
+  }
+  memoryLocked = true;
+  memoryStatus.textContent = "Not a pair — try to remember them!";
+  memoryFlipTimer = window.setTimeout(() => {
+    for (const open of memoryOpenCards) {
+      open.button.textContent = "✿";
+      open.button.classList.add("is-hidden");
+      open.button.setAttribute("aria-label", `Hidden card ${memoryCards.indexOf(open.card) + 1}`);
+    }
+    memoryOpenCards = [];
+    memoryLocked = false;
+    memoryStatus.textContent = "Find the matching pairs!";
+  }, 850);
+}
+
+document.querySelector("#memory-reset").addEventListener("click", startMemoryGame);
+startMemoryGame();
+
+const rpsChoices = ["rock", "paper", "scissors"];
+const rpsEmojis = { rock: "✊", paper: "✋", scissors: "✌️" };
+const rpsBeats = { rock: "scissors", paper: "rock", scissors: "paper" };
+const rpsResult = document.querySelector("#rps-result");
+const rpsScore = document.querySelector("#rps-score");
+let rpsPlayerScore = 0;
+let rpsPandaScore = 0;
+
+function updateRpsScore() {
+  rpsScore.textContent = `You ${rpsPlayerScore} · Panda ${rpsPandaScore}`;
+}
+
+document.querySelectorAll(".rps-board button").forEach((button) => {
+  button.addEventListener("click", () => {
+    const playerChoice = button.dataset.choice;
+    const pandaChoice = rpsChoices[Math.floor(Math.random() * rpsChoices.length)];
+    if (playerChoice === pandaChoice) {
+      rpsResult.textContent = `You both chose ${rpsEmojis[playerChoice]} — it's a tie!`;
+    } else if (rpsBeats[playerChoice] === pandaChoice) {
+      rpsPlayerScore += 1;
+      rpsResult.textContent = `${rpsEmojis[playerChoice]} beats ${rpsEmojis[pandaChoice]} — you win this round!`;
+    } else {
+      rpsPandaScore += 1;
+      rpsResult.textContent = `${rpsEmojis[pandaChoice]} beats ${rpsEmojis[playerChoice]} — panda wins this round!`;
+    }
+    updateRpsScore();
+  });
+});
+
+document.querySelector("#rps-reset").addEventListener("click", () => {
+  rpsPlayerScore = 0;
+  rpsPandaScore = 0;
+  rpsResult.textContent = "Pick your move to start!";
+  updateRpsScore();
+});
+
+const popBoard = document.querySelector("#pop-board");
+const popHoles = [...popBoard.querySelectorAll("button")];
+const popStatus = document.querySelector("#pop-status");
+let popTimer;
+let popRoundTimer;
+let popActiveIndex = -1;
+let popScore = 0;
+let popSeconds = 15;
+
+function movePopTarget() {
+  popHoles.forEach((hole, index) => {
+    const active = index === popActiveIndex;
+    hole.classList.toggle("is-active", active);
+    hole.textContent = active ? "🐼" : "";
+    hole.setAttribute("aria-label", active ? "Panda! Tap to score" : "Empty spot");
+  });
+}
+
+function endPopGame() {
+  window.clearInterval(popTimer);
+  window.clearInterval(popRoundTimer);
+  popActiveIndex = -1;
+  movePopTarget();
+  popStatus.textContent = `Time! You caught ${popScore} pandas.`;
+  document.querySelector("#pop-start").disabled = false;
+}
+
+document.querySelector("#pop-start").addEventListener("click", (event) => {
+  window.clearInterval(popTimer);
+  window.clearInterval(popRoundTimer);
+  popScore = 0;
+  popSeconds = 15;
+  popActiveIndex = Math.floor(Math.random() * popHoles.length);
+  const startButton = event.currentTarget;
+  startButton.disabled = true;
+  popStatus.textContent = `Catch as many as you can! ${popSeconds}s · Score: ${popScore}`;
+  movePopTarget();
+  popRoundTimer = window.setInterval(() => {
+    popActiveIndex = (popActiveIndex + 1 + Math.floor(Math.random() * (popHoles.length - 1))) % popHoles.length;
+    movePopTarget();
+  }, 850);
+  popTimer = window.setInterval(() => {
+    popSeconds -= 1;
+    if (popSeconds <= 0) {
+      endPopGame();
+      return;
+    }
+    popStatus.textContent = `Catch as many as you can! ${popSeconds}s · Score: ${popScore}`;
+  }, 1000);
+});
+
+popHoles.forEach((hole, index) => {
+  hole.addEventListener("click", () => {
+    if (index !== popActiveIndex || document.querySelector("#pop-start").disabled === false) return;
+    popScore += 1;
+    popStatus.textContent = `Nice catch! ${popSeconds}s · Score: ${popScore}`;
+    popActiveIndex = Math.floor(Math.random() * popHoles.length);
+    movePopTarget();
+  });
+});
+
+const guessForm = document.querySelector("#guess-form");
+const guessInput = document.querySelector("#guess-number");
+const guessStatus = document.querySelector("#guess-status");
+const guessCount = document.querySelector("#guess-count");
+let secretNumber = Math.floor(Math.random() * 50) + 1;
+let guessAttempts = 0;
+let guessIsOver = false;
+
+guessForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const guess = Number(guessInput.value);
+  if (!Number.isInteger(guess) || guess < 1 || guess > 50 || guessIsOver) {
+    guessInput.setCustomValidity("Choose a whole number from 1 to 50.");
+    guessInput.reportValidity();
+    return;
+  }
+  guessInput.setCustomValidity("");
+  guessAttempts += 1;
+  guessCount.textContent = `Guesses: ${guessAttempts}`;
+  if (guess === secretNumber) {
+    guessStatus.textContent = `You found it in ${guessAttempts} ${guessAttempts === 1 ? "guess" : "guesses"}!`;
+    guessIsOver = true;
+    guessInput.disabled = true;
+    guessForm.querySelector("button").disabled = true;
+  } else {
+    guessStatus.textContent = guess < secretNumber ? "A little higher!" : "A little lower!";
+    guessInput.select();
+  }
+});
+
+document.querySelector("#guess-reset").addEventListener("click", () => {
+  secretNumber = Math.floor(Math.random() * 50) + 1;
+  guessAttempts = 0;
+  guessIsOver = false;
+  guessInput.disabled = false;
+  guessInput.value = "";
+  guessForm.querySelector("button").disabled = false;
+  guessStatus.textContent = "Pick a number from 1 to 50.";
+  guessCount.textContent = "Guesses: 0";
+});
+
 const chatStatus = document.querySelector("#chat-connection");
 const chatDot = document.querySelector(".online-dot");
 const chatMessages = document.querySelector("#chat-messages");
@@ -281,6 +491,44 @@ let firebaseServerTimestamp;
 let firebaseSet;
 let chatUnsubscribe;
 const displayedMessageIds = new Set();
+const profanityTerms = new Set([
+  "asshole", "bastard", "bitch", "bitching", "bullshit", "dammit", "damn",
+  "dick", "fucker", "fucking", "fucked", "fuck", "godverdomme", "hoer",
+  "kanker", "klootzak", "kurwa", "kut", "lul", "motherfucker", "prick",
+  "shit", "shitty", "tering", "tyfus"
+]);
+
+function redactContactInfo(value, replacement = "[removed]") {
+  return value
+    .replace(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, replacement)
+    .replace(/(^|[^\w])(\+?\d[\d\s().-]{5,}\d)(?!\w)/g, (match, prefix, candidate) => {
+      const digits = candidate.replace(/\D/g, "");
+      return digits.length >= 7 && digits.length <= 15 ? `${prefix}[phone removed]` : match;
+    });
+}
+
+function censorProfanity(value) {
+  return value.split(/(\s+)/).map((token) => {
+    const normalized = token.toLocaleLowerCase()
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[0@]/g, "o")
+      .replace(/3/g, "e")
+      .replace(/\$/g, "s");
+    const candidates = [
+      normalized.replace(/[1!|]/g, "i").replace(/[^a-z]/g, ""),
+      normalized.replace(/[1!|]/g, "u").replace(/[^a-z]/g, ""),
+      normalized.replace(/[^a-z]/g, "")
+    ];
+    if (!candidates.some((candidate) => profanityTerms.has(candidate))) return token;
+    return token.replace(/[\p{L}\p{N}]/gu, "*");
+  }).join("");
+}
+
+function sanitizeChatText(value, maxLength, contactReplacement = "[removed]") {
+  return censorProfanity(redactContactInfo(value.trim(), contactReplacement))
+    .slice(0, maxLength);
+}
 
 function addChatMessage(name, message, system = false) {
   const item = document.createElement("li");
@@ -318,9 +566,9 @@ function addFirebaseMessage(id, message) {
   item.dataset.messageId = id;
   const sender = document.createElement("span");
   sender.className = "message-name";
-  sender.textContent = message.name.slice(0, 24);
+  sender.textContent = sanitizeChatText(message.name, 24);
   const content = document.createElement("span");
-  content.textContent = message.text.slice(0, 240);
+  content.textContent = sanitizeChatText(message.text, 240, "[contact removed]");
   item.append(sender, content);
   chatMessages.append(item);
   while (chatMessages.children.length > 50) {
@@ -368,6 +616,8 @@ async function connectFirebaseChat() {
       databaseSdk.orderByChild("timestamp"),
       databaseSdk.limitToLast(50)
     );
+    const initialMessages = await databaseSdk.get(chatQuery);
+    initialMessages.forEach((snapshot) => addFirebaseMessage(snapshot.key, snapshot.val()));
     firebasePush = databaseSdk.push;
     firebaseServerTimestamp = databaseSdk.serverTimestamp;
     firebaseSet = databaseSdk.set;
@@ -400,10 +650,21 @@ chatForm.addEventListener("submit", (event) => {
     setChatStatus("Not connected yet — your message was not sent.");
     return;
   }
+  const safeName = sanitizeChatText(name, 24);
+  const safeMessage = sanitizeChatText(message, 240, "[contact removed]");
+  if (!safeName || !safeMessage) {
+    setChatStatus("Please enter a name and a message after filtering.", true);
+    return;
+  }
+  if (safeName !== name || safeMessage !== message) {
+    addChatMessage("Panda note", "Your message was filtered to remove contact details and profanity.", true);
+  }
+  chatName.value = safeName;
+  chatInput.value = safeMessage;
   sendButton.disabled = true;
   firebaseSet(firebasePush(firebaseChatRef), {
-    name,
-    text: message,
+    name: safeName,
+    text: safeMessage,
     timestamp: firebaseServerTimestamp()
   }).then(() => {
     chatInput.value = "";
