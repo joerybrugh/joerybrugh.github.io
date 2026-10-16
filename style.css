@@ -207,7 +207,8 @@ h1, h2, h3 { font-family: Nunito, sans-serif; }
 .donation-art span { position: absolute; right: 2px; bottom: 4px; display: grid; width: 42px; height: 42px; place-items: center; border: 3px solid var(--paper); border-radius: 50%; background: #f2a900; color: white; font-size: 1.4rem; font-weight: 900; }
 .donation-copy h2 { margin: 6px 0 10px; color: var(--brown-dark); font-family: Nunito, sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); line-height: 1.15; letter-spacing: -.04em; }
 .donation-copy > p:not(.donation-status) { max-width: 600px; color: var(--muted); }
-.donation-address { display: block; margin: 16px 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: #fbf8f0; color: var(--brown-dark); font-size: clamp(.68rem, 1.7vw, .9rem); overflow-wrap: anywhere; user-select: all; }
+.donation-address-label { display: block; margin-top: 16px; color: var(--brown-dark); font-size: .76rem; font-weight: 800; letter-spacing: .04em; }
+.donation-address { display: block; margin: 6px 0 14px; padding: 15px 16px; border: 2px solid var(--teal); border-radius: 12px; background: var(--teal-soft); color: #294f49; font-size: clamp(.75rem, 1.8vw, .95rem); font-weight: 800; line-height: 1.5; overflow-wrap: anywhere; user-select: all; }
 .donation-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .donation-status { min-height: 1.4em; margin: 8px 0 0; color: var(--teal); font-size: .8rem; }
 .donation-warning { margin: 0; font-size: .72rem; }
