@@ -82,9 +82,11 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .brand em { color: var(--coral); font-style: normal; }
 .brand-mark { font-size: 1.5rem; }
 .nav-links { display: flex; align-items: center; gap: clamp(18px, 3vw, 38px); }
-.nav-links a { color: var(--brown); font-size: .9rem; font-weight: 700; text-decoration: none; }
-.nav-links a:hover, .site-footer a:hover { color: var(--teal); }
-.nav-links .nav-chat-link { padding: 10px 17px; border: 1px solid #d6c6b3; border-radius: 99px; }
+.nav-links a { display: inline-flex; align-items: center; min-height: 40px; padding: 8px 15px; border: 1px solid #e5d9c8; border-radius: 99px; background: var(--paper); color: var(--brown-dark); font-size: .86rem; font-weight: 800; text-decoration: none; box-shadow: 0 3px 10px rgba(90, 67, 43, .05); transition: transform .18s, border-color .18s, background .18s, color .18s; }
+.nav-links a:hover { transform: translateY(-2px); border-color: var(--teal); background: var(--teal-soft); color: var(--brown-dark); }
+.nav-links .nav-chat-link { border-color: var(--teal); background: var(--teal); color: white; }
+.nav-links .nav-chat-link:hover { background: #3f8177; color: white; }
+.site-footer a:hover { color: var(--teal); }
 .menu-toggle { display: none; border: 0; background: none; font-size: 1.4rem; color: var(--brown-dark); }
 
 .hero {
@@ -104,7 +106,6 @@ h1, h2, h3 { font-family: Nunito, sans-serif; }
 .hero h1 { margin: 23px 0 15px; color: var(--brown-dark); font-size: clamp(3rem, 6.2vw, 5.1rem); font-weight: 900; line-height: 1.04; letter-spacing: -.065em; }
 .hero h1 span, .section-heading h2 span, .about-content h2 span, .chat-intro h2 span { color: var(--coral); }
 .hero-copy > p { max-width: 465px; margin-bottom: 26px; color: var(--muted); font-size: 1.06rem; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 12px; border: 0; border-radius: 99px; cursor: pointer; font-weight: 800; text-decoration: none; transition: transform .2s, box-shadow .2s, background .2s; }
 .button:hover { transform: translateY(-2px); }
 .button-primary { padding: 13px 21px; background: var(--teal); color: white; box-shadow: 0 8px 20px rgba(76, 149, 137, .2); }
