@@ -201,7 +201,6 @@ h1, h2, h3 { font-family: Nunito, sans-serif; }
 .chat-form button { width: 42px; flex: 0 0 42px; border: 0; border-radius: 11px; background: var(--teal); color: white; cursor: pointer; }
 .chat-form button:hover { background: #3f8177; }
 .chat-form button:disabled { opacity: .55; cursor: not-allowed; }
-.chat-footnote { margin: 0; padding: 0 15px 12px; color: var(--muted); font-size: .67rem; }
 .site-footer { padding-block: 22px; background: var(--brown-dark); color: #fff7eb; }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .footer-inner .brand em, .footer-inner p span { color: #f4a28a; }
