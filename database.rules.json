@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "public-chat": {
+      "messages": {
+        ".read": "auth != null",
+        ".indexOn": ["timestamp"],
+        "$messageId": {
+          ".write": "auth != null && !data.exists()",
+          ".validate": "newData.hasChildren(['name', 'text', 'timestamp'])",
+          "name": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 24"
+          },
+          "text": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 240"
+          },
+          "timestamp": {
+            ".validate": "newData.isNumber()"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      }
+    }
+  }
+}
