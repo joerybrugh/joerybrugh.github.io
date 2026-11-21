@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FraudeAcademie en TaalAcademie in één Nederlandstalige kennisomgeving.">
+    <title>KennisHub | Veiligheid en talen</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="#top" aria-label="KennisHub startpagina">
+            <span class="brand-mark" aria-hidden="true">K</span>
+            <span>KennisHub</span>
+        </a>
+        <nav class="main-tabs" role="tablist" aria-label="Hoofdacademies">
+            <button type="button" class="main-tab active" id="tab-scam" role="tab" aria-selected="true" aria-controls="view-scam" data-view="scam">
+                <span aria-hidden="true">🛡️</span> Digitale Veiligheid <small>Fraude Academie</small>
+            </button>
+            <button type="button" class="main-tab" id="tab-language" role="tab" aria-selected="false" aria-controls="view-language" data-view="language">
+                <span aria-hidden="true">語</span> Talen Leren <small>Taal Academie</small>
+            </button>
+        </nav>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Donkere modus inschakelen" title="Donkere modus">
+            <span class="theme-icon" aria-hidden="true">☾</span>
+        </button>
+    </header>
+
+    <main id="top">
+        <section class="academy-view" id="view-scam" role="tabpanel" aria-labelledby="tab-scam">
+            <section class="scam-hero">
+                <div>
+                    <p class="eyebrow">FraudeAcademie</p>
+                    <h1>Even pauzeren.<br><span>Dan pas handelen.</span></h1>
+                    <p>Herken online oplichting, leer de tactieken achter een overtuigend bericht en weet wat u direct kunt doen.</p>
+                </div>
+                <aside>
+                    <span aria-hidden="true">✓</span>
+                    <p><strong>Verdacht verzoek?</strong><br>Stop, controleer via een vertrouwd kanaal en deel nooit uw geheime codes.</p>
+                </aside>
+            </section>
+
+            <section class="content-section encyclopedia-section" aria-labelledby="scam-encyclopedia-title">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">De signalen herkennen</p>
+                        <h2 id="scam-encyclopedia-title">Scam-encyclopedie</h2>
+                    </div>
+                    <span class="count-badge" id="scam-count" aria-live="polite"></span>
+                </div>
+                <div class="toolbar">
+                    <label for="scam-search">Zoeken
+                        <input id="scam-search" type="search" placeholder="Bijvoorbeeld bank, WhatsApp, IBAN…">
+                    </label>
+                    <label for="scam-category">Categorie
+                        <select id="scam-category">
+                            <option value="">Alle onderwerpen</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="card-grid" id="scam-grid" aria-live="polite"></div>
+            </section>
+
+            <section class="content-section quiz-section" id="scam-quiz" aria-labelledby="scam-quiz-title">
+                <div class="quiz-copy">
+                    <p class="eyebrow">Echt of oplichting?</p>
+                    <h2 id="scam-quiz-title">Herken de scam</h2>
+                    <p>Beoordeel herkenbare situaties, ontvang een uitleg en bouw een persoonlijke oefenreeks op.</p>
+                    <div class="progress-summary">
+                        <span>Voortgang</span>
+                        <strong id="scam-progress-score">0 / 10</strong>
+                    </div>
+                </div>
+                <div class="quiz-panel" id="scam-quiz-content" aria-live="polite"></div>
+            </section>
+
+            <section class="content-section emergency-section" aria-labelledby="emergency-title">
+                <div class="section-heading emergency-heading">
+                    <div>
+                        <p class="eyebrow">Snel handelen beperkt schade</p>
+                        <h2 id="emergency-title">Slachtoffer geworden?</h2>
+                    </div>
+                </div>
+                <ol class="emergency-steps" id="emergency-steps"></ol>
+                <div class="resource-grid" id="emergency-resources"></div>
+            </section>
+        </section>
+
+        <section class="academy-view" id="view-language" role="tabpanel" aria-labelledby="tab-language" hidden>
+            <section class="language-hero">
+                <p class="eyebrow">TaalAcademie</p>
+                <h1>Vandaag één taal sterker.</h1>
+                <p>Leer Engels, Mandarijn, Koreaans of Kinyarwanda met woordenschat, uitspraak, flashcards en quizzen.</p>
+            </section>
+
+            <section class="content-section language-home" id="language-home" aria-labelledby="language-title">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Kies een leerpad</p>
+                        <h2 id="language-title">Welke taal wilt u leren?</h2>
+                    </div>
+                </div>
+                <div class="language-grid" id="language-grid"></div>
+            </section>
+
+            <section class="content-section language-dashboard" id="language-dashboard" hidden aria-labelledby="language-dashboard-title">
+                <div class="dashboard-heading">
+                    <div>
+                        <p class="eyebrow" id="language-eyebrow"></p>
+                        <h2 id="language-dashboard-title"></h2>
+                    </div>
+                    <button type="button" class="button secondary" id="back-to-languages">← Alle talen</button>
+                </div>
+                <div class="language-tabs" role="tablist" aria-label="Leeronderdelen">
+                    <button type="button" class="language-tab active" role="tab" aria-selected="true" aria-controls="language-panel-guide" data-panel="language-panel-guide">Schrift &amp; uitspraak</button>
+                    <button type="button" class="language-tab" role="tab" aria-selected="false" aria-controls="language-panel-vocabulary" data-panel="language-panel-vocabulary">Woordenschat</button>
+                    <button type="button" class="language-tab" role="tab" aria-selected="false" aria-controls="language-panel-flashcards" data-panel="language-panel-flashcards">Flashcards</button>
+                    <button type="button" class="language-tab" role="tab" aria-selected="false" aria-controls="language-panel-quiz" data-panel="language-panel-quiz">Quiz</button>
+                </div>
+
+                <div class="language-panel" id="language-panel-guide" role="tabpanel">
+                    <h3>Schrift en uitspraak</h3>
+                    <div id="language-guide" class="lesson-copy"></div>
+                </div>
+                <div class="language-panel" id="language-panel-vocabulary" role="tabpanel" hidden>
+                    <div class="panel-heading">
+                        <h3>Woordenschat en voorbeeldzinnen</h3>
+                        <label for="language-vocabulary-category">Thema
+                            <select id="language-vocabulary-category"></select>
+                        </label>
+                    </div>
+                    <div class="vocabulary-grid" id="language-vocabulary"></div>
+                </div>
+                <div class="language-panel" id="language-panel-flashcards" role="tabpanel" hidden>
+                    <div class="panel-heading">
+                        <h3>Flashcards</h3>
+                        <label for="language-flashcard-category">Thema
+                            <select id="language-flashcard-category"></select>
+                        </label>
+                    </div>
+                    <article class="flashcard" id="flashcard" aria-live="polite">
+                        <p id="flashcard-count"></p>
+                        <div id="flashcard-content"></div>
+                        <div class="flashcard-actions">
+                            <button type="button" class="button primary" id="flip-card">Toon vertaling</button>
+                            <button type="button" class="button audio" id="speak-card">🔊 Luister</button>
+                        </div>
+                    </article>
+                    <div class="flashcard-navigation">
+                        <button type="button" class="button secondary" id="previous-card">← Vorige</button>
+                        <button type="button" class="button secondary" id="next-card">Volgende →</button>
+                    </div>
+                </div>
+                <div class="language-panel" id="language-panel-quiz" role="tabpanel" hidden>
+                    <div class="panel-heading">
+                        <h3>Oefenquiz</h3>
+                        <label for="language-quiz-category">Thema
+                            <select id="language-quiz-category"></select>
+                        </label>
+                    </div>
+                    <div id="language-quiz" aria-live="polite"></div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">K</span> KennisHub</a>
+        <p>Veiligheid en taalonderwijs samen in één rustige leeromgeving.</p>
+    </footer>
+
+    <dialog class="reading-modal" id="reading-modal" aria-labelledby="modal-title">
+        <div class="modal-topbar">
+            <span>FraudeAcademie / Encyclopedie</span>
+            <button type="button" id="modal-close" aria-label="Leespaneel sluiten">Sluiten <span aria-hidden="true">×</span></button>
+        </div>
+        <article class="modal-content" id="modal-content"></article>
+    </dialog>
+
+    <aside class="chat-widget" aria-label="Publieke chat">
+        <button type="button" class="chat-bubble" id="chat-bubble" aria-expanded="false" aria-controls="chat-panel" aria-label="Open publieke chat">
+            <span aria-hidden="true">💬</span>
+            <span class="chat-bubble-label">Chat</span>
+        </button>
+        <section class="chat-panel" id="chat-panel" aria-labelledby="chat-title" hidden>
+            <header class="chat-header">
+                <div>
+                    <p class="eyebrow">KennisHub community</p>
+                    <h2 id="chat-title">Publieke chat</h2>
+                </div>
+                <button type="button" class="chat-close" id="chat-close" aria-label="Chat sluiten">×</button>
+            </header>
+            <p class="chat-status" id="chat-status" role="status">Verbinden…</p>
+            <div class="chat-messages" id="chat-messages" aria-live="polite"></div>
+            <form class="chat-form" id="chat-form">
+                <label for="chat-name">Naam
+                    <input id="chat-name" name="name" maxlength="24" autocomplete="nickname" placeholder="Uw naam">
+                </label>
+                <label for="chat-text">Bericht
+                    <textarea id="chat-text" name="text" maxlength="240" rows="2" placeholder="Typ een bericht…" required></textarea>
+                </label>
+                <button type="submit" class="chat-send" id="chat-send" disabled>Verstuur</button>
+            </form>
+        </section>
+    </aside>
+
+    <script src="scam_data.js"></script>
+    <script src="language_data.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
